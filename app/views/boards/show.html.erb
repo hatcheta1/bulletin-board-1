@@ -70,12 +70,55 @@
         <th>
           Expires on
         </th>
+      </tr>
+
+      <% @the_board.posts.where("expires_on > ?", Date.today).order({ :expires_on => :asc }).each do |a_post| %>
+      <tr>
+        <td>
+          <%= a_post.title %>
+        </td>
+
+        <td>
+          <%= a_post.body %>
+        </td>
+
+        <td>
+          <%= a_post.created_at.strftime("%b %e, %Y") %>
+        </td>
+        <td>
+          <%= a_post.expires_on.strftime("%b %e, %Y") %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<h2>Expired posts</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Title
+        </th>
 
         <th>
+          Body
+        </th>
+
+        <th>
+          Posted on
+        </th>
+
+        <th>
+          Expired on
         </th>
       </tr>
 
-      <% @the_board.posts.order({ :expires_on => :asc }).each do |a_post| %>
+      <% matching_posts = @the_board.posts.where("expires_on < ?", Date.today) %>
+      <% matching_posts.order({ :expires_on => :desc }).each do |a_post| %>
+
       <tr>
         <td>
           <%= a_post.title %>
@@ -97,5 +140,3 @@
     </table>
   </div>
 </div>
-
-<h2>Expired posts</h2>
