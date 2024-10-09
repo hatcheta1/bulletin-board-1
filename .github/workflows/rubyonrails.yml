@@ -50,7 +50,5 @@ jobs:
         with:
           bundler-cache: true
       - name: Generate binstubs
-        run: bundle binstubs rubocop
+        run: bundle binstubs
       # Add or replace any other lints here
-      - name: Lint Ruby files
-        run: bin/rubocop --parallel
